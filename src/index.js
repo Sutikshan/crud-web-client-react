@@ -8,15 +8,15 @@ import { Link } from "react-router-dom";
 
 const Index = () => (
   <Router>
-    <App>
-      <div>
-        <ul>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/customer">Customer</Link></li>
-        </ul>
-        <Routes />
-      </div>
-    </App>
+    <div>
+      <App />
+      <ul>
+        <li><Link to="/about">About</Link></li>
+        <li><Link to="/customer">Customer</Link></li>
+      </ul>
+      <Routes />
+    </div>
+
   </Router>
 );
 ReactDOM.render(<Index />, document.getElementById("root"));
