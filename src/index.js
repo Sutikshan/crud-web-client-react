@@ -1,9 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import './index.css';
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import ReactDOM from "react-dom";
+import App from "./App";
+import Routes from "./routes";
+import "./index.css";
+import { Link } from "react-router-dom";
 
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
+const Index = () => (
+  <Router>
+    <App>
+      <div>
+        <ul>
+          <li><Link to="/about">About</Link></li>
+          <li><Link to="/customer">Customer</Link></li>
+        </ul>
+        <Routes />
+      </div>
+    </App>
+  </Router>
 );
+ReactDOM.render(<Index />, document.getElementById("root"));
