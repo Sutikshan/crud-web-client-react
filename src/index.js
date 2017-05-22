@@ -4,19 +4,17 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import Routes from "./routes";
 import "./index.css";
-import { Link } from "react-router-dom";
+import Header from "./header/Header";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 const Index = () => (
   <Router>
-    <App>
-      <div>
-        <ul>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/customer">Customer</Link></li>
-        </ul>
+    <div>
+      <App>
+        <Header />
         <Routes />
-      </div>
-    </App>
+      </App>
+    </div>
   </Router>
 );
 ReactDOM.render(<Index />, document.getElementById("root"));
