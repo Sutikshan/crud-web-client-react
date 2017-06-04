@@ -1,11 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
+import configureStore from "./store/configureStore";
+import { Provider } from "react-redux";
 import App from "./App";
 import Routes from "./routes";
 import "./index.css";
 import Header from "./header/Header";
-import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+const store = configureStore();
 
 const Index = () => (
   <Router>
@@ -17,4 +20,10 @@ const Index = () => (
     </div>
   </Router>
 );
-ReactDOM.render(<Index />, document.getElementById("root"));
+
+render(
+  <Provider store={store}>
+    <Index />
+  </Provider>,
+  document.getElementById("root")
+);
