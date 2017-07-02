@@ -1,6 +1,9 @@
-import React, { Component, PropTypes } from "react";
+import PropTypes from "prop-types";
+import React, { Component } from "react";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { createCustomer } from "./customerActions";
+
+import * as customerActions from "./customerActions";
 
 class Customer extends Component {
   constructor(props, context) {
@@ -21,7 +24,7 @@ class Customer extends Component {
   }
 
   onClickSave() {
-    this.props.createCustomer(this.state.customer);
+    this.props.actions.createCustomer(this.state.customer);
   }
 
   customerRow(customer, index) {
@@ -49,7 +52,7 @@ class Customer extends Component {
 
 Customer.propTypes = {
   customers: PropTypes.array.isRequired,
-  createCustomer: PropTypes.func.isRequired
+  actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state, ownProps) {
@@ -59,7 +62,7 @@ function mapStateToProps(state, ownProps) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    createCustomer: customer => dispatch(createCustomer(customer))
+    actions: bindActionCreators(customerActions, dispatch)
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Customer);
