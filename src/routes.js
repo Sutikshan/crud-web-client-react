@@ -1,12 +1,14 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import About from "./home/About";
-import Customer from "./customer/Customer";
+import CustomerContainer from "./customer/CustomerContainer";
+import CustomerFormContainer from "./customer/CustomerFormContainer";
 
 const Routes = () => (
   <div>
     <Route path="/about" component={About} />
-    <Route path="/customer" component={Customer} />
+    <Route path="/customer/:id" component={CustomerFormContainer} />
+    <Route path="/customerlist" component={CustomerContainer} />
   </div>
 );
 export default Routes;
