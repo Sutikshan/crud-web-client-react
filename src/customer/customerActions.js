@@ -2,7 +2,7 @@ import * as types from "./customerConstants";
 import customerApi from "./mockCustomerApi";
 
 export function createCustomer(customer) {
-  return { type: types.CREATE_CUSTOMER, customer };
+  return { type: types.CREATE_CUSTOMER_SUCCESS, customer };
 }
 
 export function createCustomerAsync(customer) {
