@@ -5,6 +5,7 @@ import CustomerListRow from "./CustomerListRow.jsx";
 const CustomersList = props => (
   <div>
     <h1>Customers</h1>
+
     <table>
       <thead>
         <tr>

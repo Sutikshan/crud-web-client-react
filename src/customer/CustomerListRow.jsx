@@ -4,7 +4,7 @@ import React from "react";
 const CustomerListRow = ({ customer }) => (
   <tr>
     <td>
-      <a href={`customer/{customer.id}`}>
+      <a href={`customer/${customer.id}`}>
         {customer.name}
       </a>
     </td>

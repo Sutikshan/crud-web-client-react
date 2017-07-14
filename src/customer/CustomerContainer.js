@@ -7,14 +7,6 @@ import CustomersList from "./CustomersList";
 import * as customerActions from "./customerActions";
 
 class Customer extends Component {
-  constructor(props, context) {
-    super(props, context);
-
-    this.state = {
-      customer: { name: "" }
-    };
-  }
-
   render() {
     return (
       <div>
