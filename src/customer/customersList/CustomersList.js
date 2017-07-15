@@ -1,11 +1,13 @@
 import PropTypes from "prop-types";
 import React from "react";
-import CustomerListRow from "./CustomerListRow.jsx";
+import CustomerListRow from "./CustomerListRow";
 
 const CustomersList = props => (
   <div>
     <h1>Customers</h1>
-
+    <a href="customer">
+      Create
+    </a>
     <table>
       <thead>
         <tr>

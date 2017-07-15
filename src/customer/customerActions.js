@@ -1,5 +1,5 @@
 import * as types from "./customerConstants";
-import customerApi from "./mockCustomerApi";
+import customerApi from "./customerApi";
 
 export function createCustomer(customer) {
   return { type: types.CREATE_CUSTOMER_SUCCESS, customer };
@@ -33,5 +33,11 @@ export function loadCustomers() {
       .catch(error => {
         throw error;
       });
+  };
+}
+
+export function getCustomerAsync(id) {
+  return function(dispatch) {
+    return customerApi.getCustomerDetail(id);
   };
 }

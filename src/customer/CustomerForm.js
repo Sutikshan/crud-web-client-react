@@ -5,20 +5,27 @@ import PropTypes from "prop-types";
 
 import TextInput from "../lib/TextInput";
 import * as customerActions from "./customerActions";
+import customerApi from "./customerApi";
 
-class CustomerFormContainer extends Component {
+class CustomerForm extends Component {
   constructor(props, context) {
     super(props, context);
-
+    // note- single customer detail state is not connected with Redux. It is local state.
     this.state = {
       customer: { name: "" }
     };
+    const id = props.match.params.id;
+    if (id) {
+      customerApi
+        .getCustomerDetail(id)
+        .then(customer => this.setState({ customer }));
+    }
     this.onNameChange = this.onNameChange.bind(this);
     this.onClickSave = this.onClickSave.bind(this);
   }
 
   onNameChange(event) {
-    const customer = this.state.customer;
+    const customer = Object.assign({}, this.state.customer);
     customer.name = event.target.value;
     this.setState({ customer });
   }
@@ -44,10 +51,8 @@ class CustomerFormContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    customer: state.customer
-  };
+CustomerForm.contextTypes = {
+  router: PropTypes.object
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -55,10 +60,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     actions: bindActionCreators(customerActions, dispatch)
   };
 };
-CustomerFormContainer.PropTypes = {
-  customer: PropTypes.object.isRequired
-};
+CustomerForm.PropTypes = {};
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  CustomerFormContainer
-);
+export default connect(null, mapDispatchToProps)(CustomerForm);

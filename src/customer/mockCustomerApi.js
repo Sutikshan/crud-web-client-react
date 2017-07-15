@@ -4,17 +4,18 @@ const uuidv4 = require("uuid/v4");
 // This file mocks a web API by working with the hard-coded data below.
 // It uses setTimeout to simulate the delay of an AJAX call.
 // All calls return promises.
+// TODO use localStorage to cache data.
 const customers = [
   {
-    id: uuidv4(),
+    id: "1",
     name: "Cory"
   },
   {
-    id: uuidv4(),
+    id: "2",
     name: "Scott"
   },
   {
-    id: uuidv4(),
+    id: "3",
     name: "Wahlin"
   }
 ];
@@ -29,6 +30,16 @@ class CustomerApi {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(Object.assign([], customers));
+      }, delay);
+    });
+  }
+
+  static getCustomerDetail(id) {
+    return new Promise((resolve, reject) => {
+      // simulating a server call.
+      const customer = customers.find(c => c.id === id);
+      setTimeout(() => {
+        resolve(Object.assign({}, customer));
       }, delay);
     });
   }
@@ -62,7 +73,7 @@ class CustomerApi {
     });
   }
 
-  static deleteAuthor(authorId) {
+  static deleteCustomer(authorId) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         const indexOfCustomerToDelete = customers.findIndex(
