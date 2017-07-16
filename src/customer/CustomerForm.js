@@ -5,33 +5,25 @@ import PropTypes from "prop-types";
 
 import TextInput from "../lib/TextInput";
 import * as customerActions from "./customerActions";
-import customerApi from "./customerApi";
 
 class CustomerForm extends Component {
   constructor(props, context) {
     super(props, context);
-    // note- single customer detail state is not connected with Redux. It is local state.
-    this.state = {
-      customer: { name: "" }
-    };
+
     const id = props.match.params.id;
     if (id) {
-      customerApi
-        .getCustomerDetail(id)
-        .then(customer => this.setState({ customer }));
+      this.props.actions.getCustomerAsync(id);
     }
     this.onNameChange = this.onNameChange.bind(this);
     this.onClickSave = this.onClickSave.bind(this);
   }
 
   onNameChange(event) {
-    const customer = Object.assign({}, this.state.customer);
-    customer.name = event.target.value;
-    this.setState({ customer });
+    this.props.actions.updateName(event.target.value);
   }
 
   onClickSave() {
-    this.props.actions.saveCustomerAsync(this.state.customer);
+    this.props.actions.saveCustomerAsync(this.props.customer);
     this.props.history.push("/customers");
   }
 
@@ -44,7 +36,7 @@ class CustomerForm extends Component {
           label="Customer Name"
           type="text"
           onChange={this.onNameChange}
-          value={this.state.customer.name}
+          value={this.props.customer.name}
         />
         <input type="submit" onClick={this.onClickSave} value="Save" />
       </div>
@@ -52,8 +44,10 @@ class CustomerForm extends Component {
   }
 }
 
-CustomerForm.contextTypes = {
-  router: PropTypes.object
+const mapStateToProps = (state, ownProps) => {
+  return {
+    customer: state.customer
+  };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -61,6 +55,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     actions: bindActionCreators(customerActions, dispatch)
   };
 };
-CustomerForm.PropTypes = {};
+CustomerForm.PropTypes = {
+  customer: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired
+};
 
-export default connect(null, mapDispatchToProps)(CustomerForm);
+export default connect(mapStateToProps, mapDispatchToProps)(CustomerForm);

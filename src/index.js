@@ -6,9 +6,10 @@ import { Provider } from "react-redux";
 import Header from "./header/Header";
 import Routes from "./routes";
 import { loadCustomers } from "./customer/customerActions";
+import initialState from "./initialState";
 import "./index.css";
 
-const store = configureStore();
+const store = configureStore(initialState);
 store.dispatch(loadCustomers());
 
 render(

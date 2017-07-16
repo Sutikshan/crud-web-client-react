@@ -1,5 +1,6 @@
 import * as types from "./customerConstants";
 import customerApi from "./customerApi";
+import { beginLoadingStatus } from "../lib/loadingStatus/loadingStatusAction";
 
 const createCustomer = customer => {
   return { type: types.CREATE_CUSTOMER_SUCCESS, customer };
@@ -10,29 +11,34 @@ const updateCustomer = customer => {
 };
 
 export function saveCustomerAsync(customer) {
-  let dispatchMethod = createCustomer;
-  if (customer.id) {
-    dispatchMethod = updateCustomer;
-  }
   return function(dispatch) {
+    dispatch(beginLoadingStatus());
+
     return customerApi
       .saveCustomer(customer)
       .then(response => {
-        dispatch(dispatchMethod(response));
+        if (customer.id) {
+          dispatch(updateCustomer(response));
+        } else {
+          dispatch(createCustomer(response));
+        }
       })
       .catch(error => {
         throw error;
       });
   };
 }
+
 export function loadCustomersSuccess(customers) {
   return {
     type: types.LOAD_CUSTOMERS_SUCCESS,
     customers
   };
 }
+
 export function loadCustomers() {
   return function(dispatch) {
+    dispatch(beginLoadingStatus());
     return customerApi
       .getAllCustomers()
       .then(customers => {
@@ -43,9 +49,24 @@ export function loadCustomers() {
       });
   };
 }
+const getCustomer = customer => {
+  return { type: types.GET_CUSTOMER_SUCCESS, customer };
+};
 
 export function getCustomerAsync(id) {
   return function(dispatch) {
-    return customerApi.getCustomerDetail(id);
+    dispatch(beginLoadingStatus());
+    return customerApi.getCustomerDetail(id).then(customer => {
+      dispatch(getCustomer(customer));
+    });
+  };
+}
+
+export function updateName(name) {
+  return function(dispatch) {
+    dispatch({
+      type: types.UPDATE_CUSTOMER_NAME,
+      name
+    });
   };
 }
