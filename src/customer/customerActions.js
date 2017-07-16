@@ -1,16 +1,24 @@
 import * as types from "./customerConstants";
 import customerApi from "./customerApi";
 
-export function createCustomer(customer) {
+const createCustomer = customer => {
   return { type: types.CREATE_CUSTOMER_SUCCESS, customer };
-}
+};
 
-export function createCustomerAsync(customer) {
+const updateCustomer = customer => {
+  return { type: types.UPDATE_CUSTOMER_SUCCESS, customer };
+};
+
+export function saveCustomerAsync(customer) {
+  let dispatchMethod = createCustomer;
+  if (customer.id) {
+    dispatchMethod = updateCustomer;
+  }
   return function(dispatch) {
     return customerApi
       .saveCustomer(customer)
-      .then(customer => {
-        dispatch(createCustomer(customer));
+      .then(response => {
+        dispatch(dispatchMethod(response));
       })
       .catch(error => {
         throw error;

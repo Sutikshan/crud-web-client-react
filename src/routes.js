@@ -8,7 +8,7 @@ const Routes = () => (
   <div>
     <Route path="/about" component={About} />
     <Route path="/customer/:id?" component={CustomerForm} />
-    <Route path="/customerlist" component={CustomerPage} />
+    <Route path="/customers" component={CustomerPage} />
   </div>
 );
 export default Routes;

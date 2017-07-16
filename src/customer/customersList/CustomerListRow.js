@@ -1,12 +1,13 @@
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import React from "react";
 
 const CustomerListRow = ({ customer }) => (
   <tr>
     <td>
-      <a href={`customer/${customer.id}`}>
+      <Link to={`customer/${customer.id}`}>
         {customer.name}
-      </a>
+      </Link>
     </td>
   </tr>
 );

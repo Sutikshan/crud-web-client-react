@@ -10,8 +10,8 @@ const Header = () => (
       <div><h2 className="App-name">Easy CRM</h2></div>
     </div>
     <div className="Header-menu">
+      <div className="Menu-item"><Link to="/customers">Customers</Link></div>
       <div className="Menu-item"><Link to="/about">About</Link></div>
-      <div className="Menu-item"><Link to="/customerlist">Customer</Link></div>
     </div>
   </header>
 );

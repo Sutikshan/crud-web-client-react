@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import React from "react";
 import CustomerListRow from "./CustomerListRow";
@@ -5,9 +6,9 @@ import CustomerListRow from "./CustomerListRow";
 const CustomersList = props => (
   <div>
     <h1>Customers</h1>
-    <a href="customer">
+    <Link to="customer">
       Create
-    </a>
+    </Link>
     <table>
       <thead>
         <tr>

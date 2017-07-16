@@ -31,7 +31,8 @@ class CustomerForm extends Component {
   }
 
   onClickSave() {
-    this.props.actions.createCustomerAsync(this.state.customer);
+    this.props.actions.saveCustomerAsync(this.state.customer);
+    this.props.history.push("/customers");
   }
 
   render() {

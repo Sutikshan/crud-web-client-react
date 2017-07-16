@@ -8,6 +8,11 @@ export default function customersReducer(state = [], action) {
     case types.LOAD_CUSTOMERS_SUCCESS:
       return action.customers;
 
+    case types.UPDATE_CUSTOMER_SUCCESS:
+      return [
+        ...state.filter(customer => customer.id !== action.customer.id),
+        Object.assign({}, action.customer)
+      ];
     default:
       return state;
   }

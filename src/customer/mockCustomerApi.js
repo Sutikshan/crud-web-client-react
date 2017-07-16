@@ -64,7 +64,6 @@ class CustomerApi {
           //The server would generate ids for new customers in a real app.
           //Cloning so copy returned is passed by value rather than by reference.
           customer.id = generateId(customer);
-          console.log("------------------", customer, customers);
           customers.push(customer);
         }
 
