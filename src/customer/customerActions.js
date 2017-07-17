@@ -1,6 +1,6 @@
 import * as types from "./customerConstants";
 import customerApi from "./customerApi";
-import { beginLoadingStatus } from "../lib/loadingStatus/loadingStatusAction";
+import { beginLoadingStatus } from "../util/loadingStatus/loadingStatusAction";
 
 const createCustomer = customer => {
   return { type: types.CREATE_CUSTOMER_SUCCESS, customer };

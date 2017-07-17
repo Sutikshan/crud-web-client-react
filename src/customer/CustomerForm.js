@@ -94,7 +94,7 @@ class CustomerForm extends Component {
           onClick={this.onClickSave}
           value={saving ? "Saving" : "Save"}
         />
-        <input type="button" onClick={this.onClickCancel} value="Cancel" />
+        <input type="button" onClick={this.onClickCancel} value="Close" />
       </div>
     );
   }
