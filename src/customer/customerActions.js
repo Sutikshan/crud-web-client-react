@@ -14,18 +14,13 @@ export function saveCustomerAsync(customer) {
   return function(dispatch) {
     dispatch(beginLoadingStatus());
 
-    return customerApi
-      .saveCustomer(customer)
-      .then(response => {
-        if (customer.id) {
-          dispatch(updateCustomer(response));
-        } else {
-          dispatch(createCustomer(response));
-        }
-      })
-      .catch(error => {
-        throw error;
-      });
+    return customerApi.saveCustomer(customer).then(response => {
+      if (customer.id) {
+        dispatch(updateCustomer(response));
+      } else {
+        dispatch(createCustomer(response));
+      }
+    });
   };
 }
 
@@ -39,14 +34,9 @@ export function loadCustomersSuccess(customers) {
 export function loadCustomers() {
   return function(dispatch) {
     dispatch(beginLoadingStatus());
-    return customerApi
-      .getAllCustomers()
-      .then(customers => {
-        dispatch(loadCustomersSuccess(customers));
-      })
-      .catch(error => {
-        throw error;
-      });
+    return customerApi.getAllCustomers().then(customers => {
+      dispatch(loadCustomersSuccess(customers));
+    });
   };
 }
 const getCustomer = customer => {
