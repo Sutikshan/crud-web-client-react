@@ -1,10 +1,11 @@
 .App-logo {
-  animation: App-logo-spin infinite 10s linear;
   height: 60px;
   display: inline-block;
   vertical-align: top;
 }
-
+.App-logo-loading {
+  animation: App-logo-spin infinite 10s linear;
+}
 header.App-header {
   background-color: #263d36;
   background-position: center top;
