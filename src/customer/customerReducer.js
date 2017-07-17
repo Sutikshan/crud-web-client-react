@@ -5,8 +5,11 @@ export default function customerReducer(state = initialState.customer, action) {
   switch (action.type) {
     case types.GET_CUSTOMER_SUCCESS:
       return action.customer;
-    case types.UPDATE_CUSTOMER_NAME:
-      return Object.assign({}, state, { name: action.name });
+
+    case types.CREATE_CUSTOMER_SUCCESS:
+    case types.UPDATE_CUSTOMER_SUCCESS:
+      return action.customer;
+
     default:
       return state;
   }

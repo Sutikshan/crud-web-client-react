@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import logo from "../logo.svg";
-import "./Header.css";
+import "./header.css";
 
 class Header extends React.Component {
   render() {

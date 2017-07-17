@@ -5,38 +5,40 @@ import PropTypes from "prop-types";
 
 import initialState from "../initialState";
 import TextInput from "../lib/TextInput";
+import Notification from "../lib/notification/Notification";
 import * as customerActions from "./customerActions";
+
+const initialFormState = {
+  customer: initialState.customer,
+  errors: [],
+  saving: false,
+  isDirty: false,
+  showNotification: false
+};
 
 class CustomerForm extends Component {
   constructor(props, context) {
     super(props, context);
     // customer state is being managed locally, instead of from redux store.
     // it make cancel easy, and no need to add actions/reducer for each input field change.
-    console.log("constructor called");
-    this.state = {
-      customer: initialState.customer,
-      errors: [],
-      saving: false,
-      isDirty: false
-    };
-
+    this.state = initialFormState;
     this.onNameChange = this.onNameChange.bind(this);
     this.onClickSave = this.onClickSave.bind(this);
-    this.onClickCancel = this.onClickCancel.bind(this);
+    this.onClickClose = this.onClickClose.bind(this);
+    this.reload = this.reload.bind(this);
+    this.redirect = this.redirect.bind(this);
+    this.showNotification = this.showNotification.bind(this);
   }
 
   componentDidMount() {
-    console.log("componentDidMount called");
-
     const id = this.props.match.params.id;
     if (id) {
       this.props.actions.getCustomerAsync(id);
+      this.setState({ editMode: true });
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("componentWillReceiveProps called");
-
     if (this.state.customer.id !== nextProps.customer.id) {
       this.setState({
         customer: Object.assign({}, nextProps.customer),
@@ -59,28 +61,59 @@ class CustomerForm extends Component {
     this.setState({ saving: true });
     this.props.actions
       .saveCustomerAsync(this.state.customer)
-      .then(() => this.redirect());
+      .then(
+        () => (this.state.editMode ? this.redirect() : this.showNotification())
+      );
   }
 
-  onClickCancel() {
+  onClickClose() {
     if (this.state.isDirty) {
-      return confirm("Are you sure you want to cancel?")
+      return confirm("Are you sure you want to close?")
         ? this.redirect()
         : null;
     }
     this.redirect();
   }
 
+  showNotification() {
+    this.props.history.push(`/customer/${this.props.customer.id}`);
+    this.setState({
+      showNotification: true,
+      saving: false,
+      isDirty: false,
+      customer: this.props.customer
+    });
+  }
+
   redirect() {
     this.props.history.push("/customers");
   }
 
+  reload() {
+    this.props.history.push("/customer");
+    this.setState(initialFormState);
+  }
+
   render() {
-    const { saving, isDirty, customer } = this.state;
+    const {
+      saving,
+      isDirty,
+      customer,
+      showNotification,
+      editMode
+    } = this.state;
 
     return (
       <div>
-        <h2>Add Customer</h2>
+        <h2>
+          {editMode ? "Edit" : "Add"} Customer
+        </h2>
+        <Notification
+          visible={showNotification}
+          withButtons={true}
+          closeOnClick={this.redirect}
+          anotherOnClick={this.reload}
+        />
         <TextInput
           name="name"
           label="Customer Name"
@@ -94,7 +127,7 @@ class CustomerForm extends Component {
           onClick={this.onClickSave}
           value={saving ? "Saving" : "Save"}
         />
-        <input type="button" onClick={this.onClickCancel} value="Close" />
+        <input type="button" onClick={this.onClickClose} value="Close" />
       </div>
     );
   }
@@ -111,6 +144,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     actions: bindActionCreators(customerActions, dispatch)
   };
 };
+
 CustomerForm.PropTypes = {
   customer: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
