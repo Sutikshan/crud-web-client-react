@@ -1,4 +1,6 @@
 import * as types from "./customerConstants";
+import * as notificationTypes from "../util/loadingStatus/loadingStatusConstants";
+
 import customerApi from "./customerApi";
 import { beginLoadingStatus } from "../util/loadingStatus/loadingStatusAction";
 
@@ -10,17 +12,26 @@ const updateCustomer = customer => {
   return { type: types.UPDATE_CUSTOMER_SUCCESS, customer };
 };
 
+const ajaxCallError = err => {
+  return { type: notificationTypes.AJAX_CALL_ERROR };
+};
 export function saveCustomerAsync(customer) {
   return function(dispatch) {
     dispatch(beginLoadingStatus());
 
-    return customerApi.saveCustomer(customer).then(response => {
-      if (customer.id) {
-        dispatch(updateCustomer(response));
-      } else {
-        dispatch(createCustomer(response));
-      }
-    });
+    return customerApi
+      .saveCustomer(customer)
+      .then(response => {
+        if (customer.id) {
+          dispatch(updateCustomer(response));
+        } else {
+          dispatch(createCustomer(response));
+        }
+      })
+      .catch(err => {
+        dispatch(ajaxCallError(err));
+        throw err;
+      });
   };
 }
 
@@ -34,9 +45,15 @@ export function loadCustomersSuccess(customers) {
 export function loadCustomers() {
   return function(dispatch) {
     dispatch(beginLoadingStatus());
-    return customerApi.getAllCustomers().then(customers => {
-      dispatch(loadCustomersSuccess(customers));
-    });
+    return customerApi
+      .getAllCustomers()
+      .then(customers => {
+        dispatch(loadCustomersSuccess(customers));
+      })
+      .catch(err => {
+        dispatch(ajaxCallError(err));
+        throw err;
+      });
   };
 }
 const getCustomer = customer => {

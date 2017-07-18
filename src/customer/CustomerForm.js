@@ -63,7 +63,8 @@ class CustomerForm extends Component {
       .saveCustomerAsync(this.state.customer)
       .then(
         () => (this.state.editMode ? this.redirect() : this.showNotification())
-      );
+      )
+      .catch(err => this.showNotification(err));
   }
 
   onClickClose() {
@@ -75,7 +76,7 @@ class CustomerForm extends Component {
     this.redirect();
   }
 
-  showNotification() {
+  showNotification(error) {
     this.props.history.push(`/customer/${this.props.customer.id}`);
     this.setState({
       showNotification: true,
@@ -83,6 +84,9 @@ class CustomerForm extends Component {
       isDirty: false,
       customer: this.props.customer
     });
+    if (error) {
+      this.setState({ errors: [error] });
+    }
   }
 
   redirect() {
@@ -102,6 +106,7 @@ class CustomerForm extends Component {
       showNotification,
       editMode
     } = this.state;
+    const hasError = this.state.errors && this.state.errors.length > 0;
 
     return (
       <div>
@@ -110,7 +115,13 @@ class CustomerForm extends Component {
         </h2>
         <Notification
           visible={showNotification}
-          withButtons={true}
+          text={
+            hasError
+              ? `Form has error:- ${this.state.errors[0]}`
+              : "Saved Successfully!"
+          }
+          withButtons={!hasError}
+          type={hasError ? "danger" : "success"}
           closeOnClick={this.redirect}
           anotherOnClick={this.reload}
         />
@@ -123,6 +134,7 @@ class CustomerForm extends Component {
         />
         <input
           type="submit"
+          minLength={3}
           disabled={saving || !isDirty}
           onClick={this.onClickSave}
           value={saving ? "Saving" : "Save"}
