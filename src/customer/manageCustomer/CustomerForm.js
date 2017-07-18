@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
-import initialState from "../initialState";
-import TextInput from "../lib/TextInput";
-import Notification from "../lib/notification/Notification";
-import * as customerActions from "./customerActions";
+import "./customerForm.css";
+import initialState from "../../initialState";
+import TextInput from "../../lib/TextInput";
+import Notification from "../../lib/notification/Notification";
+import * as customerActions from "../customerActions";
 
 const initialFormState = {
   customer: initialState.customer,
@@ -109,7 +109,7 @@ class CustomerForm extends Component {
     const hasError = this.state.errors && this.state.errors.length > 0;
 
     return (
-      <div>
+      <div className="form">
         <h2>
           {editMode ? "Edit" : "Add"} Customer
         </h2>
