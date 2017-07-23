@@ -5,13 +5,13 @@ import thunk from "redux-thunk";
 
 const middleware =
   process.env.NODE_ENV === "production"
-    ? thunk
+    ? applyMiddleware(thunk)
     : compose(
-      applyMiddleware(...[reduxImmutableStateInvariant(), thunk]),
-      window.devToolsExtension
-        ? window.devToolsExtension()
-        : devTools => devTools
-    );
+        applyMiddleware(...[reduxImmutableStateInvariant(), thunk]),
+        window.devToolsExtension
+          ? window.devToolsExtension()
+          : devTools => devTools
+      );
 console.log(middleware, process.env.NODE_ENV);
 export default function configureStore(initialState) {
   return createStore(rootReducer, initialState, middleware);
