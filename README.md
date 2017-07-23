@@ -22,3 +22,7 @@ matrix(
   0, 0, 1
 )
 ```
+
+Steps to setup boilerplate
+1. $yarn init
+2. 

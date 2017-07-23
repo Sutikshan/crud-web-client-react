@@ -12,8 +12,8 @@ const updateCustomer = customer => {
   return { type: types.UPDATE_CUSTOMER_SUCCESS, customer };
 };
 
-const ajaxCallError = err => {
-  return { type: notificationTypes.AJAX_CALL_ERROR };
+const ajaxCallError = error => {
+  return { type: notificationTypes.AJAX_CALL_ERROR, error };
 };
 export function saveCustomerAsync(customer) {
   return function(dispatch) {

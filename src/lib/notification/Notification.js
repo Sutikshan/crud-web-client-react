@@ -9,18 +9,18 @@ function Notification(props) {
     <div type={props.type}>
       {props.withButtons
         ? <div>
-            <span>
-              {props.text}
-            </span>
-            <div>
-              <button onClick={props.anotherOnClick}>
-                {props.anotherTitle}
-              </button>
-              <button onClick={props.closeOnClick}>
-                {props.closeTitle}
-              </button>
-            </div>
+          <span>
+            {props.text}
+          </span>
+          <div>
+            <button onClick={props.anotherOnClick}>
+              {props.anotherTitle}
+            </button>
+            <button onClick={props.closeOnClick}>
+              {props.closeTitle}
+            </button>
           </div>
+        </div>
         : props.text}
     </div>
   );

@@ -1,5 +1,4 @@
 import delay from "../delay";
-const uuidv4 = require("uuid/v4");
 
 // This file mocks a web API by working with the hard-coded data below.
 // It uses setTimeout to simulate the delay of an AJAX call.
@@ -22,7 +21,7 @@ const customers = [
 
 //This would be performed on the server in a real app. Just stubbing in.
 const generateId = author => {
-  return uuidv4();
+  return customers.length + 1;
 };
 
 class CustomerApi {
