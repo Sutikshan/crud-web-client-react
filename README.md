@@ -2,14 +2,14 @@
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 # TODO
-Add Tests
-Add Styling
-Add Code Generation for React components
-Add Generic Component in lib\
-Add D3/SVG Charts
-Add Product and Order Entities
-Add Searching 
-Add Authentication and Authorization
+1. Add Tests
+2. Add Styling
+3. Add Code Generation for React components
+4. Add Generic Component in lib\
+5. Add D3/SVG Charts
+6. Add Product and Order Entities
+7. Add Searching 
+8. Add Authentication and Authorization
 
 ## Tooling on top of create-react-app
   - [Prettier](#https://github.com/prettier/prettier)
