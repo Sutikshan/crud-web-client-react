@@ -4,9 +4,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import "./customerForm.css";
 import initialState from "../../initialState";
-import TextInput from "../../lib/TextInput";
-import Notification from "../../lib/notification/Notification";
 import * as customerActions from "../customerActions";
+import CustomerInputs from "./CustomerInputs.jsx";
 
 const initialFormState = {
   customer: initialState.customer,
@@ -16,7 +15,7 @@ const initialFormState = {
   showNotification: false
 };
 
-class CustomerForm extends Component {
+class ManageCustomer extends Component {
   constructor(props, context) {
     super(props, context);
     // customer state is being managed locally, instead of from redux store.
@@ -32,6 +31,7 @@ class CustomerForm extends Component {
 
   componentDidMount() {
     const id = this.props.match.params.id;
+
     if (id) {
       this.props.actions.getCustomerAsync(id);
       this.setState({ editMode: true });
@@ -84,6 +84,7 @@ class CustomerForm extends Component {
       isDirty: false,
       customer: this.props.customer
     });
+
     if (error) {
       this.setState({ errors: [error] });
     }
@@ -109,57 +110,41 @@ class CustomerForm extends Component {
     const hasError = this.state.errors && this.state.errors.length > 0;
 
     return (
-      <div className="form">
-        <h2>
-          {editMode ? "Edit" : "Add"} Customer
-        </h2>
-        <Notification
-          visible={showNotification}
-          text={
-            hasError
-              ? `Form has error:- ${this.state.errors[0]}`
-              : "Saved Successfully!"
-          }
-          withButtons={!hasError}
-          type={hasError ? "danger" : "success"}
-          closeOnClick={this.redirect}
-          anotherOnClick={this.reload}
-        />
-        <TextInput
-          name="name"
-          label="Customer Name"
-          type="text"
-          onChange={this.onNameChange}
-          value={customer.name}
-        />
-        <input
-          type="submit"
-          minLength={3}
-          disabled={saving || !isDirty}
-          onClick={this.onClickSave}
-          value={saving ? "Saving" : "Save"}
-        />
-        <input type="button" onClick={this.onClickClose} value="Close" />
-      </div>
+      <CustomerInputs
+        titleText={editMode ? "Edit Customer" : "Add Customer"}
+        showNotification={showNotification}
+        hasError={hasError}
+        saving={saving}
+        isDirty={isDirty}
+        customer={customer}
+        errors={this.state.errors}
+        onClickClose={this.onClickClose}
+        onClickSave={this.onClickSave}
+        redirect={this.redirect}
+        reload={this.reload}
+        onNameChange={this.onNameChange}
+      />
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     customer: state.customer
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = dispatch => {
   return {
     actions: bindActionCreators(customerActions, dispatch)
   };
 };
 
-CustomerForm.PropTypes = {
+ManageCustomer.propTypes = {
   customer: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CustomerForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageCustomer);

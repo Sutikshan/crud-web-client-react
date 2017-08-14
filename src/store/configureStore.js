@@ -12,7 +12,6 @@ const middleware =
           ? window.devToolsExtension()
           : devTools => devTools
       );
-console.log(middleware, process.env.NODE_ENV);
 export default function configureStore(initialState) {
   return createStore(rootReducer, initialState, middleware);
 }

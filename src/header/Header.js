@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 import logo from "../logo.svg";
-import "./header.css";
+import "./Header.css";
 
 class Header extends React.Component {
   render() {
@@ -20,7 +20,7 @@ class Header extends React.Component {
             <img src={logo} className={logoClass} alt="logo" />
           </div>
           <div>
-            <h2 className="App-name">Easy CRM</h2>
+            <h2 className="App-name">Easy CRM123</h2>
           </div>
         </div>
         <div className="Header-menu">

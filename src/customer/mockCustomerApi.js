@@ -20,13 +20,13 @@ const customers = [
 ];
 
 //This would be performed on the server in a real app. Just stubbing in.
-const generateId = author => {
-  return customers.length + 1;
+const generateId = () => {
+  return (customers.length + 1).toString();
 };
 
 class CustomerApi {
   static getAllCustomers() {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       setTimeout(() => {
         resolve(Object.assign([], customers));
       }, delay);
@@ -34,7 +34,7 @@ class CustomerApi {
   }
 
   static getCustomerDetail(id) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       // simulating a server call.
       const customer = customers.find(c => c.id === id);
       setTimeout(() => {
@@ -72,7 +72,7 @@ class CustomerApi {
   }
 
   static deleteCustomer(authorId) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       setTimeout(() => {
         const indexOfCustomerToDelete = customers.findIndex(
           customer => customer.id === authorId

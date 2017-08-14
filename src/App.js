@@ -5,9 +5,10 @@ import configureStore from "./store/configureStore";
 import initialState from "./initialState";
 import { loadCustomers } from "./customer/customerActions";
 import Header from "./header/Header";
-import Routes from "./routes";
+import Routes from "./Routes";
 
 const store = configureStore(initialState);
+
 store.dispatch(loadCustomers());
 
 const App = () => {
